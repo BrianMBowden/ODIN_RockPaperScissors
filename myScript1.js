@@ -8,7 +8,12 @@ function computerPlay(){
 
 function playerSelection(){
     var choice = prompt("What is your selection? (Rock, Paper, Scissors)");
-    //Need error checking here
+    choice = capitalize(choice);
+    while (choice != ("Rock" || "Paper" || "Scissors")){
+        console.log("Invalid choice, try again...");
+        choice = prompt("What is your selection? (Rock, Paper, Scissors)");
+        choice = capitalize(choice);
+    }
     return choice;
 }
 
@@ -26,16 +31,24 @@ function draw(){
     console.log("The game is a draw");
 }
 
+function capitalize(word){
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+}
+
 function playARound(playerSel, computerSel) {
     //Rock beats scissors
     //Paper covers rock 
     //Scissors cuts paper
+
+    var winner = false;
+    //default winner is computer
 
     console.log(playerSel + " " + computerSel);
 
     if (playerSel == "Rock"){
         if (computerSel == "Paper"){
             computerWin(playerSel, computerSel);
+            winner = true;
         }
         else if (computerSel == "Scissors"){
             IWin(playerSel, computerSel);
@@ -67,6 +80,13 @@ function playARound(playerSel, computerSel) {
         }
 
     }
+
+}
+
+function game(){
+    var computerScore = 0;
+    var playerScore = 0;
+
 
 }
 
