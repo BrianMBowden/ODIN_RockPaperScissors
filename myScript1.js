@@ -9,10 +9,12 @@ function computerPlay(){
 function playerSelection(){
     var choice = prompt("What is your selection? (Rock, Paper, Scissors)");
     choice = capitalize(choice);
-    while (choice != ("Rock" || "Paper" || "Scissors")){
+    console.log(choice);
+    while (choice != "Rock" && choice != "Paper" && choice != "Scissors"){
         console.log("Invalid choice, try again...");
         choice = prompt("What is your selection? (Rock, Paper, Scissors)");
         choice = capitalize(choice);
+        console.log(choice);
     }
     return choice;
 }
@@ -40,18 +42,21 @@ function playARound(playerSel, computerSel) {
     //Paper covers rock 
     //Scissors cuts paper
 
-    var winner = false;
-    //default winner is computer
+    var winner = 0;
+    //default 0 == draw
+    //computer 1
+    //player 2
 
     console.log(playerSel + " " + computerSel);
 
     if (playerSel == "Rock"){
         if (computerSel == "Paper"){
             computerWin(playerSel, computerSel);
-            winner = true;
+            winner = 1;
         }
         else if (computerSel == "Scissors"){
             IWin(playerSel, computerSel);
+            winner = 2;
         }
         else {
             draw();
@@ -63,32 +68,59 @@ function playARound(playerSel, computerSel) {
         }
         else if (computerSel == "Scissors"){
             IWin(playerSel, computerSel);
+            winner = 2;
         }
         else {
             computerWin(playerSel, computerSel);
+            winner = 1;
         } 
     }
     else { // player selects scissors
         if (computerSel == "Paper"){
             IWin(playerSel, computerSel);
+            winner = 2;
         }
         else if (computerSel == "Scissors"){
             draw();
         }
         else {
             computerWin(playerSel, computerSel);
+            winner = 1;
         }
 
     }
-
+    return winner;
 }
 
 function game(){
     var computerScore = 0;
     var playerScore = 0;
 
+    var roundWinner = 0;
+    for(var i = 0; i < 5; i++){
+        roundWinner = playARound(playerSelection(), RPS[computerPlay()]);
+        if (roundWinner == 1){
+            computerScore++;
+        }
+        else if (roundWinner == 2){
+            playerScore++;
+        }
+        else {
+            //Round is a draw, no points, replay round
+            i--;
+        }
+        console.log("Games remaining: " + (5 - i));
+    }
+
+    console.log("Final Scores:");
+    console.log("Computer Score: " + computerScore);
+    console.log("Player Score: " + playerScore);
+
+
 
 }
 
-playARound(playerSelection(), RPS[computerPlay()]);
+game();
+
+
 
